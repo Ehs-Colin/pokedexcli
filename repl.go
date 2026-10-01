@@ -10,7 +10,11 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
+}
+
+type config struct {
+	commands map[string]cliCommand
 }
 
 func getCommands() map[string]cliCommand {
@@ -28,10 +32,12 @@ func getCommands() map[string]cliCommand {
 	}
 }
 
-func startRepl() {
+func startRepl(conf *config) {
 	reader := bufio.NewScanner(os.Stdin)
-
 	for {
+		if err := reader.Err(); err != nil {
+			fmt.Printf("IO Error: %s", err.Error())
+		}
 		fmt.Print("Pokedex > ")
 		reader.Scan()
 
@@ -40,8 +46,8 @@ func startRepl() {
 			continue
 		}
 		commandName := words[0]
-		if command, exists := getCommands()[commandName]; exists {
-			err := command.callback()
+		if command, exists := conf.commands[commandName]; exists {
+			err := command.callback(conf)
 			if err != nil {
 				fmt.Println(err)
 			}
