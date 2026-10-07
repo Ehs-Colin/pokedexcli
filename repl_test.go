@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -46,6 +47,43 @@ func TestCleanInput(t *testing.T) {
 			if word != expectedWord {
 				t.Errorf("cleanInput(%v) == %v, expected %v", c.input, actual, c.expected)
 			}
+		}
+	}
+}
+
+func TestAttemptCatch(t *testing.T) {
+	cases := []struct {
+		input    int
+		expected bool
+	}{
+		{
+			input:    0,
+			expected: true,
+		},
+		{
+			input:    301,
+			expected: false,
+		},
+	}
+	for _, c := range cases {
+		actual := attemptCatch(c.input)
+		if actual != c.expected {
+			t.Errorf("attemptCatch(%v) == %v, expected %v", c.input, actual, c.expected)
+		}
+	}
+
+	trueAchieved := false
+	falseAchieved := true
+	for i := range 1000 {
+		result := attemptCatch(150)
+		if result {
+			trueAchieved = true
+		} else {
+			falseAchieved = true
+		}
+		if trueAchieved && falseAchieved {
+			fmt.Printf("Both results achieved in %d tries", i)
+			break
 		}
 	}
 }

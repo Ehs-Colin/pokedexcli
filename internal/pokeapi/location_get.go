@@ -17,7 +17,7 @@ func (c *Client) ListPokemon(locationName string) (Location, error) {
 	// 2>Check CACHE first.  Return from cache if found
 	if val, ok := c.cache.Get(url); ok {
 		locationResp := Location{}
-		err = json.Unmarshal(val, locationResp)
+		err = json.Unmarshal(val, &locationResp)
 		if err != nil {
 			return Location{}, err
 		}

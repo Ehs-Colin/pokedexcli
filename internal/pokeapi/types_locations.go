@@ -1,6 +1,6 @@
 package pokeapi
 
-// RespShallowLocations -
+// RespShallowLocations - Paginated location-area JSON
 type RespShallowLocations struct {
 	Count    int     `json:"count"`
 	Next     *string `json:"next"`
