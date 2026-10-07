@@ -14,7 +14,7 @@ type MapArea struct {
 	}
 }
 
-func commandMapForward(conf *config) error {
+func commandMapForward(conf *config, args ...string) error {
 	mapArea, err := conf.pokeapiClient.ListLocations(conf.nextLocationsURL)
 	if err != nil {
 		return err
@@ -27,7 +27,7 @@ func commandMapForward(conf *config) error {
 	return nil
 }
 
-func commandMapBack(conf *config) error {
+func commandMapBack(conf *config, args ...string) error {
 	if conf.prevLocationsURL == nil {
 		return fmt.Errorf("You're on the first page")
 	}
