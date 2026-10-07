@@ -20,12 +20,13 @@ func commandCatch(conf *config, args ...string) error {
 	// 3> Attempt to "catch" the pokemon
 	fmt.Printf("Throwing a Pokeball at %s...\n", pokemonName)
 	//fmt.Printf("Pokemon id: %d Experience: %d\n", pokemon.Id, pokemon.BaseExperience)
-	if attemptCatch(pokemon.BaseExperience) {
-		fmt.Printf("%s was caught!\n", pokemonName)
-		conf.caughtPokemon[pokemonName] = pokemon
-	} else {
+	if !attemptCatch(pokemon.BaseExperience) {
 		fmt.Printf("%s escaped!\n", pokemonName)
+		return nil
 	}
+	fmt.Printf("%s was caught!\n", pokemonName)
+	conf.caughtPokemon[pokemonName] = pokemon
+	fmt.Println("You may now inspect it with the inspect command.")
 
 	return nil
 }
